@@ -68,5 +68,19 @@ namespace DataAnnotationStudy
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [IsEmpty(ErrorMessage = "빈 값일 수 없습니다.")]
+        public string strCusValue { get; set; }
+    }
+
+    // 사용자 지정 유효성 검사 클래스 만들기
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    public class IsEmptyAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            var inputValue = value as string;
+            return !string.IsNullOrEmpty(inputValue);
+        }
     }
 }
